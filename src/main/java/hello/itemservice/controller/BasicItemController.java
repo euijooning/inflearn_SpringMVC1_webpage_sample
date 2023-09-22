@@ -1,0 +1,47 @@
+package hello.itemservice.controller;
+
+import hello.itemservice.domain.Item;
+import hello.itemservice.repository.ItemRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+
+@Controller
+@RequestMapping("/basic/items")
+@RequiredArgsConstructor
+public class BasicItemController {
+
+    private final ItemRepository itemRepository;
+
+    @GetMapping
+    public String items(Model model) {
+        // 상품 목록을 조회
+        List<Item> items = itemRepository.findAll();
+        // 조회한 상품 목록을 모델에 추가
+        model.addAttribute("items", items);
+        // "basic/items" 뷰 템플릿을 호출하여 상품 목록을 화면에 표시
+        return "basic/items";
+    }
+
+    /**
+     * 테스트용 데이터 추가
+     */
+    @PostConstruct
+    public void init() {
+        // 애플리케이션 초기화 시, 테스트 데이터를 데이터베이스에 저장.
+        itemRepository.save(new Item("testA", 10000, 10));
+        itemRepository.save(new Item("testB", 20000, 20));
+    }
+
+    /*
+    컨트롤러 로직은 itemRepository 에서 모든 상품을 조회한 다음에 모델에 담는다.
+    그리고 뷰 템플릿을 호출한다.
+     */
+
+
+}
