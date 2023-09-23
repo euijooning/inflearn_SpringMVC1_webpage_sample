@@ -104,6 +104,53 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    /**
+     * 상품 수정 폼을 불러오는 메서드.
+     *
+     * @param itemId 수정할 상품의 ID
+     * @param model  Spring MVC 모델 객체. 뷰로 데이터를 전달하기 위해 사용됨.
+     * @return 상품 수정 폼 템플릿 이름
+     */
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        // 상품 ID를 사용하여 데이터베이스에서 해당 상품 정보를 조회.
+        Item item = itemRepository.findById(itemId);
+
+        // 조회한 상품 정보를 모델에 추가하여 뷰로 전달.
+        model.addAttribute("item", item);
+
+        // 상품 수정 폼 템플릿 이름을 반환.
+        return "basic/editForm";
+    }
+
+    /**
+     * 상품을 수정하는 메서드.
+     *
+     * @param itemId 수정할 상품의 ID
+     * @param item   수정된 상품 정보를 나타내는 객체
+     * @return 상품 수정 후 해당 상품 상세 정보 페이지로 리다이렉트
+     */
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
+        // 상품 수정 메서드를 호출하여 상품 정보를 업데이트 (itemRepository.update 메서드 사용)
+        itemRepository.update(itemId, item);
+
+        // 수정된 상품 정보를 포함하는 해당 상품의 상세 정보 페이지로 리다이렉트.
+        return "redirect:/basic/items/{itemId}";
+    }
+
+
+    /**
+     * @param item
+     * @return PRG - Post/Redirect/Get
+     */
+    @PostMapping("/add")
+    public String addItemV5(Item item) {
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();
+    }
+
+
 
     /**
      * 테스트용 데이터 추가
