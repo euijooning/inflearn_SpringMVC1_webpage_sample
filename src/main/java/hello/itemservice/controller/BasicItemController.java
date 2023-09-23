@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -150,7 +151,28 @@ public class BasicItemController {
         return "redirect:/basic/items/" + item.getId();
     }
 
+    /**
+     * 상품을 추가하는 메서드.
+     *
+     * @param item               추가할 상품 정보를 나타내는 객체
+     * @param redirectAttributes Spring MVC 리다이렉트 시 데이터를 전달하기 위한 객체
+     * @return 상품 추가 후 해당 상품 상세 정보 페이지로 리다이렉트
+     */
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+        // 상품 정보를 데이터베이스에 저장하고 저장된 상품 정보를 반환.
+        Item savedItem = itemRepository.save(item);
 
+        // 리다이렉트 시 URL에 파라미터를 추가하기 위해 RedirectAttributes를 사용.
+        // "itemId" 파라미터에 저장된 상품의 ID를 추가.
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+
+        // "status" 파라미터를 추가하고 값을 true로 설정. (예: 성공적으로 상품을 추가한 상태를 나타냄)
+        redirectAttributes.addAttribute("status", true);
+
+        // 상품 추가 후 해당 상품의 상세 정보 페이지로 리다이렉트.
+        return "redirect:/basic/items/{itemId}";
+    }
 
     /**
      * 테스트용 데이터 추가
