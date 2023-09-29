@@ -1,6 +1,5 @@
-package hello.itemservice.repository;
+package hello.itemservice.domain.item;
 
-import hello.itemservice.domain.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,8 +11,6 @@ import java.util.Map;
 public class ItemRepository {
 
     private static final Map<Long, Item> store = new HashMap<>();
-    // 실무 멀티 스레드 환경에서는 HashMap 을 쓰면 안 된다.
-    // 사용하고 싶다면 currentHashMap 을 써야한다.
     private static long sequence = 0L;
 
     public Item save(Item item) {

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!-- 부트스트랩 CSS 파일을 불러옵니다. -->
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 스타일 정의: .container 클래스에 최대 너비를 설정합니다. */
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <!-- 페이지 제목을 출력합니다. -->
+        <h2>상품 수정 폼</h2>
+    </div>
+
+    <form action="item.html" th:action method="post">
+        <div>
+            <!-- 상품 ID 입력 필드와 레이블: 수정 불가능한 필드로 item.id 값을 출력합니다. -->
+            <label for="id">상품 ID</label>
+            <input type="text" id="id" name="id" class="form-control" value="1" th:value="${item.id}" readonly>
+        </div>
+        <div>
+            <!-- 상품명 입력 필드와 레이블: 현재 상품명을 출력하고 수정 가능합니다. -->
+            <label for="itemName">상품명</label>
+            <input type="text" id="itemName" name="itemName" class="form-control" value="상품A" th:value="${item.itemName}">
+        </div>
+        <div>
+            <!-- 가격 입력 필드와 레이블: 현재 가격을 출력하고 수정 가능합니다. -->
+            <label for="price">가격</label>
+            <input type="text" id="price" name="price" class="form-control" value="10000" th:value="${item.price}">
+        </div>
+        <div>
+            <!-- 수량 입력 필드와 레이블: 현재 수량을 출력하고 수정 가능합니다. -->
+            <label for="quantity">수량</label>
+            <input type="text" id="quantity" name="quantity" class="form-control" value="10" th:value="${item.quantity}">
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <!-- 저장 버튼: 수정 내용을 저장하는 버튼 -->
+                <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
+            </div>
+            <div class="col">
+                <!-- 취소 버튼: 버튼 클릭 시 이전 페이지로 돌아가는 버튼 -->
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='item.html'"
+                        th:onclick="|location.href='@{/form/items/{itemId}(itemId=${item.id})}'|"
+                        type="button">취소</button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
