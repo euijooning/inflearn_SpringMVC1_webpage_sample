@@ -20,26 +20,26 @@
         <h2>상품 수정 폼</h2>
     </div>
 
-    <form action="item.html" th:action method="post">
+    <form action="item.html" th:action th:object="${item}" method="post">
         <div>
             <!-- 상품 ID 입력 필드와 레이블: 수정 불가능한 필드로 item.id 값을 출력합니다. -->
             <label for="id">상품 ID</label>
-            <input type="text" id="id" name="id" class="form-control" value="1" th:value="${item.id}" readonly>
+            <input type="text" id="id" name="id" th:field="*{price}" class="form-control">
         </div>
         <div>
             <!-- 상품명 입력 필드와 레이블: 현재 상품명을 출력하고 수정 가능합니다. -->
             <label for="itemName">상품명</label>
-            <input type="text" id="itemName" name="itemName" class="form-control" value="상품A" th:value="${item.itemName}">
+            <input type="text" id="itemName" name="itemName" th:field="*{itemName}" class="form-control">
         </div>
         <div>
             <!-- 가격 입력 필드와 레이블: 현재 가격을 출력하고 수정 가능합니다. -->
             <label for="price">가격</label>
-            <input type="text" id="price" name="price" class="form-control" value="10000" th:value="${item.price}">
+            <input type="text" id="price" name="price" th:field="*{price}" class="form-control">
         </div>
         <div>
             <!-- 수량 입력 필드와 레이블: 현재 수량을 출력하고 수정 가능합니다. -->
             <label for="quantity">수량</label>
-            <input type="text" id="quantity" name="quantity" class="form-control" value="10" th:value="${item.quantity}">
+            <input type="text" id="quantity" name="quantity" th:field="*{quantity}" class="form-control" >
         </div>
 
         <hr class="my-4">
