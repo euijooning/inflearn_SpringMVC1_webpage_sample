@@ -32,6 +32,10 @@ public class ItemRepository {
         findItem.setItemName(item.getItemName());
         findItem.setPrice(item.getPrice());
         findItem.setQuantity(item.getQuantity());
+        findItem.setOpen(item.getOpen());
+        findItem.setRegions(item.getRegions());
+        findItem.setItemType(item.getItemType());
+        findItem.setDeliveryCode(item.getDeliveryCode());
     }
 
     public void clearStore() { // 테스트용 메서드
