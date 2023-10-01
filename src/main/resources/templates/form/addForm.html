@@ -44,9 +44,25 @@
         <div>판매 여부</div>
         <div>
             <div class="form-check">
-<!--                <input type="checkbox" id="open" th:field="${item.open}" class="form-check-input">-->
                 <input type="checkbox" id="open" th:field="*{open}" class="form-check-input">
                 <label for="open" class="form-check-label">판매 오픈</label>
+            </div>
+        </div>
+
+        <!-- multi checkbox -->
+        <div>
+            <!-- "등록 지역" 섹션을 표시하는 div -->
+            <div>등록 지역</div>
+
+            <!-- Thymeleaf 반복문으로 지역 목록을 처리하며, 각 지역에 대한 체크박스를 생성 -->
+            <div th:each="region : ${regions}" class="form-check form-check-inline">
+                <!-- 체크박스 입력 요소 -->
+                <input type="checkbox" th:field="*{regions}" th:value="${region.key}"
+                       class="form-check-input">
+
+                <!-- 체크박스 레이블 요소 -->
+                <label th:for="${#ids.prev('regions')}"
+                       th:text="${region.value}" class="form-check-label">서울</label>
             </div>
         </div>
 

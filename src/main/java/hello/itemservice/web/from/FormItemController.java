@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -18,6 +20,23 @@ import java.util.List;
 public class FormItemController {
 
     private final ItemRepository itemRepository;
+
+    /**
+     * 이렇게 하면 이 컨트롤러를 호출할 때는
+     * 항상 얘가 ModelAttribute 에 자동으로 addAttribute 되어가지고
+     * Model에 무조건 담긴다.
+     * 그래서 일일이 메서드에 추가했던 코드를 다시 다 지울 수 있게 된다.
+     * @return
+     */
+    @ModelAttribute("regions")
+    public Map<String, String> regions() {
+        Map<String, String> regions = new LinkedHashMap<>();
+        regions.put("SEOUL", "서울");
+        regions.put("BUSAN", "부산");
+        regions.put("JEJU", "제주");
+        return regions;
+    }
+
 
 
     @GetMapping
@@ -38,6 +57,7 @@ public class FormItemController {
         // 조회한 상품을 모델에 추가. 이후 뷰 템플릿에서 사용할 수 있다.
         model.addAttribute("item", item);
         // "form/item" 뷰 템플릿을 호출하여 상품 상세 정보를 화면에 표시.
+
         return "form/item";
     }
 
@@ -45,6 +65,7 @@ public class FormItemController {
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("item", new Item());
+
         return "form/addForm";
     }
 
@@ -58,8 +79,9 @@ public class FormItemController {
      */
     @PostMapping("/add")
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
-        // 잘못봄. 여기에 로그를 추가했어야 함...
+
         log.info("item.open={}", item.getOpen());
+        log.info("item.regions={}", item.getRegions());
 
         // 상품 정보를 데이터베이스에 저장하고 저장된 상품 정보를 반환.
         Item savedItem = itemRepository.save(item);
@@ -92,6 +114,7 @@ public class FormItemController {
         // 검색한 아이템을 모델에 추가하여 뷰에서 표시할 수 있도록 함.
         model.addAttribute("item", item);
 
+
         // 수정 폼 뷰의 이름을 반환.
         return "form/editForm";
     }
@@ -112,5 +135,4 @@ public class FormItemController {
         // 수정된 상품 정보를 포함하는 해당 상품의 상세 정보 페이지로 리다이렉트.
         return "redirect:/form/items/{itemId}";
     }
-
 }
