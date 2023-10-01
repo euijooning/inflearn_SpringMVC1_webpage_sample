@@ -9,7 +9,7 @@ public enum ItemType {
         this.description = description;
     }
 
-    public String getDescription() {
+    public String getDescription() { // getter
         return description;
     }
 }

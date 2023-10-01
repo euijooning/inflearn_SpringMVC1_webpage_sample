@@ -67,6 +67,25 @@
         </div>
 
 
+        <!-- radio button -->
+        <div>
+            <!-- "상품 종류" 섹션을 표시하는 div -->
+            <div>상품 종류</div>
+
+            <!-- Thymeleaf 반복문을 사용하여 각 상품 종류에 대한 라디오 버튼을 생성 -->
+            <div th:each="type : ${itemTypes}" class="form-check form-check-inline">
+                <!-- 라디오 버튼 입력 요소 -->
+                <input type="radio" th:field="*{itemType}" th:value="${type.name()}"
+                       class="form-check-input">
+
+                <!-- 라디오 버튼 레이블 요소 -->
+                <label th:for="${#ids.prev('itemType')}" th:text="${type.description}"
+                       class="form-check-label">BOOK</label>
+            </div>
+        </div>
+
+
+
         <div class="row">
             <div class="col">
                 <!-- 상품 등록 버튼 -->

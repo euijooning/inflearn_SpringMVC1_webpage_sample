@@ -2,6 +2,7 @@ package hello.itemservice.web.from;
 
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.domain.item.ItemRepository;
+import hello.itemservice.domain.item.ItemType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,16 @@ public class FormItemController {
         regions.put("BUSAN", "부산");
         regions.put("JEJU", "제주");
         return regions;
+    }
+
+
+    // @ModelAttribute 어노테이션이 적용된 메서드
+    // 이 메서드는 "itemTypes"라는 이름으로 모델에 데이터를 추가한다.
+    @ModelAttribute("itemTypes")
+    public ItemType[] itemTypes() {
+        // ItemType 열거형(enum)의 모든 값을 배열로 반환.
+        // ItemType.values() 메서드는 enum에서 정의한 모든 열거 상수를 배열로 제공.
+        return ItemType.values();
     }
 
 
@@ -82,6 +93,7 @@ public class FormItemController {
 
         log.info("item.open={}", item.getOpen());
         log.info("item.regions={}", item.getRegions());
+        log.info("item.itemType={}", item.getItemType());
 
         // 상품 정보를 데이터베이스에 저장하고 저장된 상품 정보를 반환.
         Item savedItem = itemRepository.save(item);
