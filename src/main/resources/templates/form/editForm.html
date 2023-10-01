@@ -92,6 +92,27 @@
             </div>
         </div>
 
+
+        <!-- SELECT -->
+        <div>
+            <!-- "배송 방식" 섹션을 표시하는 div -->
+            <div>배송 방식</div>
+
+            <!-- 배송 방식을 선택하는 드롭다운 목록 -->
+            <select th:field="*{deliveryCode}" class="form-select">
+                <!-- 기본 선택 옵션 -->
+                <option value="">==배송 방식 선택==</option>
+
+                <!-- Thymeleaf 반복문을 사용하여 배송 코드 목록을 처리하고 각 항목을 생성 -->
+                <option th:each="deliveryCode : ${deliveryCodes}" th:value="${deliveryCode.code}"
+                        th:text="${deliveryCode.displayName}">FAST</option>
+            </select>
+        </div>
+
+        <!-- 수평선 추가 -->
+        <hr class="my-4">
+
+
         <div class="row">
             <div class="col">
                 <!-- 저장 버튼: 수정 내용을 저장하는 버튼 -->

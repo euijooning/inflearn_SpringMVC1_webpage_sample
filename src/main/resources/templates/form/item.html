@@ -81,6 +81,19 @@
     </div>
 
 
+    <!-- SELECT -->
+    <div>
+        <div>배송 방식</div>
+        <select th:field="${item.deliveryCode}" class="form-select" disabled>
+            <option value="">==배송 방식 선택==</option>
+            <option th:each="deliveryCode : ${deliveryCodes}" th:value="${deliveryCode.code}"
+                    th:text="${deliveryCode.displayName}">FAST</option>
+        </select>
+    </div>
+
+    <hr class="my-4">
+
+
     <div class="row">
         <div class="col">
             <!-- 상품 수정 버튼: 상품 수정 폼으로 이동합니다. -->
